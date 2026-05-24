@@ -1,0 +1,28 @@
+module EVM(
+    input vote,clk,rst,
+    input [1:0] sel,
+    output reg [6:0] tvk,
+    output reg[6:0] dmk,
+    output reg[6:0] admk,
+    output reg[6:0] ntk
+    );
+    always@(posedge clk) begin
+        if(rst == 1'b1) begin
+           tvk  <= 7'd0;
+           dmk  <=7'd0;
+           admk <=7'd0;
+           ntk  <=7'd0;
+           end
+        else if(vote == 1'b1)
+            begin
+            case(sel)
+                2'b00 : tvk <= tvk + 1; 
+                2'b01 : dmk <= dmk + 1; 
+                2'b10 : admk <= admk + 1; 
+                2'b11 : ntk <= ntk + 1; 
+                default : ;
+            endcase
+            end
+        $monitor(" Total votes of TVK is %d,DMK is %d, ADMK is %d and NTK is %d", tvk,dmk,admk,ntk); 
+        end
+endmodule

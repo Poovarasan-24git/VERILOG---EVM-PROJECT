@@ -1,0 +1,27 @@
+odule testbranch_evm(
+
+    );
+reg clk,rst,vote;
+reg[1:0]sel;
+wire [6:0] dmk,admk,tvk,ntk;
+integer i;
+EVM do(.clk(clk),.rst(rst),.vote(vote),.sel(sel),.dmk(dmk),.admk(admk),.tvk(tvk),.ntk(ntk));
+initial begin
+    {vote,sel,clk} =  1'b0;
+     end
+always #5 clk  = ~ clk;
+initial begin
+    #0 ; rst = 1'b1;
+    #10; rst = 1'b0;
+    for( i =0; i<15; i= i+1)
+    begin
+            sel[1:0] = i;
+            vote = 1'b1;
+            #10; 
+            vote = 1'b0;
+            #10;
+            
+    end
+    #50; $finish;
+        end
+endmodule
